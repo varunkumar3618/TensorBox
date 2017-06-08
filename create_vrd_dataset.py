@@ -4,21 +4,6 @@ import zipfile
 import json
 import random
 
-def get_zip(url, zip_path, unzip_path):
-    if not os.path.isfile(zip_path):
-        urllib.urlretrieve(url, zip_path)
-        with zipfile.ZipFile(zip_path) as zip_ref:
-            zip_ref.extractall(unzip_path)
-
-def get_dataset(data_dir):
-    dataset_zip_path = os.path.join(data_dir, "json_dataset.zip")
-    dataset_url = "http://cs.stanford.edu/people/ranjaykrishna/vrd/json_dataset.zip"
-    get_zip(dataset_url, dataset_zip_path, data_dir)
-
-    images_zip_path = os.path.join(data_dir, "sg_dataset.zip")
-    images_url = "http://imagenet.stanford.edu/internal/jcjohns/scene_graphs/sg_dataset.zip"
-    get_zip(images_url, images_zip_path, data_dir)
-
 def create_tbox_json(data_dir):
     images_dir = os.path.join("sg_dataset", "sg_train_images")
     annotations_file = os.path.join(data_dir, "annotations_train.json")
@@ -57,5 +42,4 @@ if __name__ == "__main__":
     data_dir = "data/vrd"
     if not os.path.isdir(data_dir):
         os.mkdir(data_dir)
-    get_dataset(data_dir)
     create_tbox_json(data_dir)
